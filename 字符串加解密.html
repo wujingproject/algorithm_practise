@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let line1 = "abcdefg"; //readline();
+        let line2 = "BCDEFGH"; // readline();
+        let smallWordsList = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        ];
+        let bigWordsList = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        ];
+
+        function jiami() {
+        let strList = line2.split("");
+        let strListLen = strList.length;
+        let newStrList = [];
+        for (let i = 0; i < strListLen; i++) {
+            if (/[a-z]/.test(strList[i])) {
+            for (let j = 0; j < 26; j++) {
+                if (strList[i].charCodeAt() === 97 + j) {
+                if (bigWordsList[j - 1]) {
+                    newStrList.push(bigWordsList[j - 1]);
+                } else {
+                    newStrList.push(bigWordsList[26]);
+                }
+                }
+            }
+            } else if (/[A-Z]/.test(strList[i])) {
+            for (let j = 0; j < 26; j++) {
+                if (strList[i].charCodeAt() === 65 + j) {
+                if (smallWordsList[j - 1]) {
+                    newStrList.push(smallWordsList[j - 1]);
+                } else {
+                    newStrList.push(smallWordsList[26]);
+                }
+                }
+            }
+            } else if (/[0-9]/.test(strList[i])) {
+            if (Number(strList[i]) > 0) {
+                newStrList.push(Number(strList[i]) - 1);
+            } else {
+                newStrList.push(9);
+            }
+            } else {
+            newStrList.push(strList[i]);
+            }
+        }
+        return newStrList.join("");
+        }
+
+        function jiemi() {
+        let strList = line1.split("");
+        let strListLen = strList.length;
+        let newStrList = [];
+        for (let i = 0; i < strListLen; i++) {
+            if (/[a-z]/.test(strList[i])) {
+            for (let j = 0; j < 26; j++) {
+                if (strList[i].charCodeAt() === 97 + j) {
+                if (bigWordsList[j + 1]) {
+                    newStrList.push(bigWordsList[j + 1]);
+                } else {
+                    newStrList.push(bigWordsList[0]);
+                }
+                }
+            }
+            } else if (/[A-Z]/.test(strList[i])) {
+            for (let j = 0; j < 26; j++) {
+                if (strList[i].charCodeAt() === 65 + j) {
+                if (smallWordsList[j + 1]) {
+                    newStrList.push(smallWordsList[j + 1]);
+                } else {
+                    newStrList.push(smallWordsList[0]);
+                }
+                }
+            }
+            } else if (/[0-9]/.test(strList[i])) {
+            if (Number(strList[i]) < 9) {
+                newStrList.push(Number(strList[i]) + 1);
+            } else {
+                newStrList.push(0);
+            }
+            } else {
+            newStrList.push(strList[i]);
+            }
+        }
+        return newStrList.join("");
+        }
+
+        console.log(jiami());
+        console.log(jiemi());
+    </script>
+</body>
+</html>

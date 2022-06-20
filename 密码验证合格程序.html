@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var suitM = function (str) {
+        let line = str;
+
+        if (line.length <= 8) {
+            return "NG";
+        }
+
+        let typeNum = 0;
+        if (/[A-z]/.test(line)) {
+            typeNum++;
+        }
+        if (/[a-z]/.test(line)) {
+            typeNum++;
+        }
+        if (/[0-9]/.test(line)) {
+            typeNum++;
+        }
+        if (/[^A-za-z0-9]/.test(line)) {
+            typeNum++;
+        }
+        if (typeNum < 3) {
+            return "NG";
+        }
+
+        let strLen = line.length;
+        let strArr = [];
+        for (let i = 0; i < strLen - 2; i++) {
+            let str1 = line.substring(i, i + 3);
+            if (strArr.indexOf(str1) > 0) {
+            return "NG";
+            } else {
+            strArr.push(str1);
+            }
+        }
+        return "OK";
+        };
+
+        // while ((str = readline())) {
+        // console.log(suitM(str));
+        // }
+
+        console.log(suitM("021Abc9000"));
+        console.log(suitM("021Abc9Abc1"));
+        console.log(suitM("021ABC9000"));
+        console.log(suitM("021$bc9000"));
+    </script>
+</body>
+</html>

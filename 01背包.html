@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let line = readline();
+        let line = "1000 5"; // readLine();
+        // let line = "50 5"; // readLine();
+        let data = line.split(" ");
+        let M = Number(data[0]);
+        let N = Number(data[1]);
+
+        let mGoods = [];
+        let attGoods = [];
+        let a = ["800 2 0", "400 5 1", "300 5 1", "400 3 0", "500 2 0"];
+        // let a = ["20 3 5", "20 3 5", "10 3 0", "10 2 0", "10 1 0"];
+        for (let i = 0; i < N; i++) {
+        // let line2 = readline();
+          let line2 = a[i];
+        let data2 = line2.split(" ");
+        let item = {
+            v: Number(data2[0]),
+            c: Number(data2[0]) * Number(data2[1]),
+            p: Number(data2[1]),
+            q: Number(data2[2]), // 0主键 1附件
+            index: i + 1,
+        };
+        if (item.q) {
+            if (!attGoods[item.q]) {
+            attGoods[item.q] = [];
+            }
+            attGoods[item.q].push(item);
+        } else {
+            mGoods.push(item);
+        }
+        }
+        let newN = mGoods.length;
+        let dp = [];
+        var initDP = function () {
+        for (var i = 0; i <= newN; i++) {
+            dp[i] = [];
+            for (var j = 0; j <= M; j++) {
+            dp[i][j] = 0;
+            }
+        }
+        };
+
+        let maxC = 0;
+        let buyList = [];
+        var getMaxConfidence = function () {
+        initDP();
+        for (var i = 1; i <= newN; i++) {
+            for (var j = 1; j <= M; j++) {
+            if (j < mGoods[i - 1].v) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                let lastC = dp[i - 1][j];
+                let curC = dp[i - 1][j - mGoods[i - 1].v] + mGoods[i - 1].c;
+                if (attGoods[mGoods[i - 1].index]) {
+                let attList = attGoods[mGoods[i - 1].index];
+                // 如果有附件
+                let curC1_1 = 0;
+                let curC1_2 = 0;
+                let curC2 = 0;
+                // 拿一个附件1
+                if (attList[0] && j >= mGoods[i - 1].v + attList[0].v) {
+                    curC1_1 =
+                    dp[i - 1][j - (mGoods[i - 1].v + attList[0].v)] +
+                    mGoods[i - 1].c +
+                    attList[0].c;
+                }
+                // 拿一个附件2
+                if (attList[1] && j >= mGoods[i - 1].v + attList[1].v) {
+                    curC1_2 =
+                    dp[i - 1][j - (mGoods[i - 1].v + attList[1].v)] +
+                    mGoods[i - 1].c +
+                    attList[1].c;
+                }
+                //拿两个附件
+                if (
+                    attList[0] &&
+                    attList[1] &&
+                    j >= mGoods[i - 1].v + attList[0].v + attList[1].v
+                ) {
+                    curC2 =
+                    dp[i - 1][j - (mGoods[i - 1].v + attList[0].v + attList[1].v)] +
+                    mGoods[i - 1].c +
+                    attList[0].c +
+                    attList[1].c;
+                }
+                curC = Math.max(curC, curC1_1, curC1_2, curC2);
+                }
+                dp[i][j] = Math.max(lastC, curC);
+                maxC = dp[i][j];
+            }
+            }
+        }
+        return maxC;
+        };
+
+        console.log(getMaxConfidence());
+
+    </script>
+</body>
+</html>

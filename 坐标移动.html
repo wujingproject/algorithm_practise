@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // var line = readline();
+        var line = "A1;W2;A10";
+        var getPos = function (posStr) {
+        let curPos = [0, 0];
+        let posList = posStr.split(";");
+        for (let i = 0; i < posList.length; i++) {
+            let posItem = posList[i];
+            let reg = /^[ADWS][1-9][0-9]?$/;
+            if (reg.test(posItem)) {
+            let posNumber = posItem[2] ? posItem[1] + posItem[2] : posItem[1];
+            posNumber = Number(posNumber);
+            if (posItem[0] === "A") {
+                curPos[0] = curPos[0] - posNumber;
+            } else if (posItem[0] === "D") {
+                curPos[0] = curPos[0] + posNumber;
+            } else if (posItem[0] === "W") {
+                curPos[1] = curPos[1] + posNumber;
+            } else if (posItem[0] === "S") {
+                curPos[1] = curPos[1] - posNumber;
+            }
+            }
+        }
+        return curPos;
+        };
+        console.log(getPos(line));
+    </script>
+</body>
+</html>

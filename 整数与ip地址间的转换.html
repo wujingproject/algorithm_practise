@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let line = readline();
+        let line = "10.0.3.193";
+        let ipList = line.split(".");
+        let ipListLen = ipList.length;
+        let newIpList = [];
+        let result = 0;
+        
+        function getNumberIP() {
+        for (let i = 0; i < ipListLen; i++) {
+            let t_ipItem = parseInt(ipList[i]).toString(2);
+            t_ipItem = String(t_ipItem);
+            let t_ipItemLen = t_ipItem.length;
+            for (m = 0; m < 8 - t_ipItemLen; m++) {
+                t_ipItem = "0" + t_ipItem;
+            }
+            newIpList.push(t_ipItem);
+        }
+        let newIp = newIpList.join("");
+       
+        let newIpLen = newIp.length;
+
+        for (let i = 0; i < newIpLen; i++) {
+        if (Number(newIp[i])) {
+            if (i === newIpLen-1) {
+            result = result + Number(newIp[i]);
+            } else {
+            result = result + Math.pow(2, newIpLen-1 - i);
+            }
+            console.log(result);
+        }
+        }
+
+        return newIp;
+        }
+        console.log(getNumberIP());
+
+    </script>
+</body>
+</html>
